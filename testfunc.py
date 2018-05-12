@@ -4,5 +4,6 @@ def func(n):
 
     #zwraca kwadrat z n
 
-    n = n*n
+    n = n*n #nice job
+    print("ŁAP")
     return n
