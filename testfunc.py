@@ -6,4 +6,6 @@ def func(n):
     #to jest dodatkowy komentarz bes sesnu
     n = n*n #nice job
     print("ŁAP")
+    #foo bar - testing pull request
+
     return n
