@@ -75,6 +75,10 @@ class Crawler(object):
             if current_domain not in domainName(link):
                 extern_links_list.append(link)
         return extern_links_list
+
+    def get_5_extern(self):
+        externe_links = self.getExternalAddresses()
+        
     
     def getExternalLinks(self):
         '''
@@ -110,6 +114,15 @@ class Crawler(object):
             if domain not in list_address:
                 list_address.append(domain)
         return list_address
+    
+    def getAlltext(self):
+        soup = self.soup
+        text_list = []
+        text_tags = ('p','a','h2','h3','h1','span', 'div')
+        for tag in text_tags:
+            for text in soup.findAll(tag):
+                text_list.append(text.get_text())
+        return text_list
 
 def domainName_list(address):
     if "https://" in address:
@@ -140,5 +153,16 @@ fuzz = Crawler('https://morefuzz.net/')
 wiki = Crawler('https://www.wikipedia.org/')
 veg = Crawler('http://www.nutreelab.pl/produkty')
 
-        
-    
+listaa = []
+
+def Crawl(address, num=0):
+#    site = Crawler(address)
+    global listaa
+    links_list = 5
+    num += 1
+    if num < 3:
+        for i in range(links_list):
+            listaa.append(num)
+            print(num)
+            Crawl("a", num)
+    return len(listaa)
