@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import re
+import requests
+import random
+import datetime
 
 address = "https://morefuzz.net/reviews/cegvera-creations-ep/"
 #html = requests.get(address)
@@ -115,9 +118,14 @@ def methode2(address):
     domain = domainName(address)
     return (domain, words)
 
-domain = domainName(address)
-words = countWords(standarizeWords(splitToWord(getAlltext(address))))
-TopWord = top5words(words)
+
+#domain = domainName(address)
+#words = countWords(standarizeWords(splitToWord(getAlltext(address))))
+#TopWord = top5words(words)
+
+
+
+# NIEPOTRZEBNE FUNKCJE
 
 #def removePunctation(words_list):
 #    p = re.compile("(\.|\!|\,|\?|\:|\;|\)|\(|\\|\/|\'|\")")

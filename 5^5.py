@@ -1,20 +1,20 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu May 17 20:06:25 2018
+import getAlltext
+from getLinks import get5random
+from bs4 import BeautifulSoup
+import re
+import requests
+import random
+import datetime
 
-@author: komp
-"""
+lista_linkow = []
 
-listaa = []
 
 def Crawl(address, num=0):
-#    site = Crawler(address)
-    global listaa
-    links_list = 5
+    links_list = get5random(address)
+    global lista_linkow
     num += 1
     if num < 6:
-        for i in range(links_list):
-            listaa.append(num)
-            print(num)
-            Crawl("a", num)
+        for link in links_list:
+            lista_linkow.append(link)
+            Crawl(link, num)
     return len(listaa)
