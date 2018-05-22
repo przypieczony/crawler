@@ -1,13 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import re
-import requests
-import random
-import datetime
-
-address = "https://morefuzz.net/reviews/cegvera-creations-ep/"
-#html = requests.get(address)
-#soup = BeautifulSoup(html.content, "lxml")
 
 def getAlltext(address):
     '''
@@ -18,7 +11,7 @@ def getAlltext(address):
     html = requests.get(address)
     soup = BeautifulSoup(html.content, "lxml")
     text_list = []
-    text_tags = ('p' 'span')    # add html tags that contains text you want to download, 
+    text_tags = ('p')    # add html tags that contains text you want to download, 
                                 # type each tag as string, dont use comma signs
     for tag in text_tags:
         for text in soup.findAll(tag):
@@ -59,6 +52,7 @@ def standarizeWords(words_list):
                 break
         if is_word == True:
             new_word_list.append(word)
+        new_word_list.sort()
     return new_word_list
 
 def countWords(words_list):
@@ -89,7 +83,7 @@ def top5words(countWords_dict):
     top_word = ""
     keys = countWords_dict.keys()
     for key in keys:
-        if len(key) > 2 and key != 'the':  # banned words    
+        if len(key) > 3 and key != 'the':  # banned words    
             if countWords_dict[key] > top_num:
                 top_num = countWords_dict[key]
                 top_word = key
@@ -114,41 +108,6 @@ def methode2(address):
     
     returns tuple (domain name, dictionary { words on site : number of appearences }) 
     '''
-    words = countWords(standarizeWords(splitToWord(getAlltext(address))))
-    domain = domainName(address)
-    return (domain, words)
-
-
-#domain = domainName(address)
-#words = countWords(standarizeWords(splitToWord(getAlltext(address))))
-#TopWord = top5words(words)
-
-
-
-# NIEPOTRZEBNE FUNKCJE
-
-#def removePunctation(words_list):
-#    p = re.compile("(\.|\!|\,|\?|\:|\;|\)|\(|\\|\/|\'|\")")
-#    new_word_list = []
-#    for word in words_list:
-#        word = p.sub(" ", word)        
-#        new_word_list.append(word)
-#    return new_word_list
-
-#def isWord(words_list):
-#    new_word_list = []
-#   numbers = ["0","1","2","3","4","5","6","7","8","9"]
-#    for word in words_list:
-#        word = word.lower()
-#        is_word = True
-#        for number in numbers:
-#            if number in word:
-#                is_word = False
-#                break
-#        if is_word == True:
-#            new_word_list.append(word)
-#    return new_word_list
-
-#def methode1(address):
-#    words = countWords(isWord(splitToWord(removePunctation(getAlltext(address)))))
-#    return words
+    words = standarizeWords(splitToWord(getAlltext(address)))
+#    domain = domainName(address)
+    return words

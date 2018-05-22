@@ -4,9 +4,6 @@ import re
 import random
 import datetime
 
-    
-address = "https://morefuzz.net/reviews/cegvera-creations-ep/"
-
 def getLinks(address):
     '''
     returns list of links (strings) that appears on given website
@@ -47,11 +44,11 @@ def getExternalLinks(address):
             external_links.append(link)
     return external_links  
 
-def get5random_ext(links_list):
+def get5random_ext(address):
     links_list = getExternalLinks(address)
-    random.seed(datetime.datetime.now())
     random_links = []
     while len(random_links) < 5:
+        random.seed(datetime.datetime.now())
         link = links_list[random.randint(0, len(links_list)-1)]
         if link not in random_links:
             random_links.append(link)
@@ -59,13 +56,10 @@ def get5random_ext(links_list):
 
 def get5random(address):
     links_list = getLinks(address)
-    random.seed(datetime.datetime.now())
     random_links = []
     while len(random_links) < 5:
+        random.seed(datetime.datetime.now())
         link = links_list[random.randint(0, len(links_list)-1)]
         if link not in random_links:
             random_links.append(link)
     return random_links
-
-    
-links = get5random(address)
