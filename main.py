@@ -39,6 +39,8 @@
 
 # Function which saves returned data from datamuse API  together with page addres to, again, json file
 
+# Add logging
+
 # Download up to external 5 pages deep. On each page another 5 pages should be analyzed.
 # From each page gather 5 most frequent words with word occurences. Put this data
 # to file together with page address. After that send this well formated data to

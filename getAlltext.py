@@ -9,7 +9,8 @@ def getAlltext(address):
     output: list containing whole raw text found between tags chosen as "text_tags" argument
     '''
     html = requests.get(address)
-    soup = BeautifulSoup(html.content, "lxml")
+    print("Get text: ",address)
+    soup = BeautifulSoup(html.content, "html.parser")
     text_list = []
     text_tags = ('p')    # add html tags that contains text you want to download, 
                                 # type each tag as string, dont use comma signs
@@ -89,25 +90,12 @@ def top5words(countWords_dict):
                 top_word = key
     return top_word
 
-def domainName(address):
-        '''
-        returns string - domain name of given website 
-        '''
-        if "https://" in address:
-            address = address.replace("https://", "")
-        if "http://" in address:
-            address = address.replace("http://", "")
-        if "www." in address:
-            address = address.replace("www.", "")
-        domain = address.split('/')[0]
-        return domain
-    
-def methode2(address):
+def collect_words(address):
     '''
     input: address of existing website
     
     returns tuple (domain name, dictionary { words on site : number of appearences }) 
     '''
     words = standarizeWords(splitToWord(getAlltext(address)))
-#    domain = domainName(address)
+
     return words
