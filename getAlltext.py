@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import re
 
 def getAlltext(address):
+    #This function should be moved to WebPage class
     '''
     input: address of existing website
     

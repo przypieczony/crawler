@@ -11,6 +11,7 @@
 
 # Regular expression (regexp in short) which finds web addresses 
 # through out page. It may be usefull in future crawling.
+# DONE
 
 # Function which gets url link as a arg and reurns data page.
 # This function must be well protected since it will be used many times.
@@ -18,6 +19,7 @@
 # Class which will find all links on page, returns only not yet visited
 # and differentiate external links from internal ones. It should use regexp 
 # from first paragrpah
+# DONE
 
 # Function which collects as much as it can text from page. It may return list.
 
