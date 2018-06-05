@@ -1,14 +1,14 @@
 from getAlltext import collect_words
-from getLinks import get_random_links
-#from getLinks import get5random_ext
+from webpage import WebPage
+from webpage import TooFewLinksOnPage
 from getAlltext import top5words
 from getAlltext import countWords
-from getLinks import TooFewLinksOnPage
+
+
 
 address = 'https://pl.wikipedia.org/wiki/Piwo'
 #address = 'https://morefuzz.net/'
 
-# remove this global variable
 lista_linkow = []
 
 def Crawl(address, num=0):
@@ -17,7 +17,8 @@ def Crawl(address, num=0):
     repeats recursively to each of the links that were found
     '''
     try:
-        links_list = get_random_links(address, 5)
+        web_page = WebPage(address)
+        links = web_page.get_links(links_amount=5, only_external_links_allowed=True)
     except TooFewLinksOnPage:
         # skip this page
         return
@@ -25,8 +26,8 @@ def Crawl(address, num=0):
     global lista_linkow
     num += 1
     recursion = 2   #CHANGE Int for number of recursions
-    if num <= recursion:         
-        for link in links_list:
+    if num <= recursion:
+        for link in links:
             if link not in lista_linkow:
                 lista_linkow.append(link)
             if num < recursion:
@@ -45,3 +46,4 @@ Crawl(address)
 All_words_list = GatherWords(lista_linkow)
 All_words_dict = countWords(All_words_list)
 top_word = top5words(All_words_dict)
+print(top_word)
