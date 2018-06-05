@@ -84,3 +84,24 @@ class WebPage():
                     print("Adding link {}".format(link))
                     random_links.append(link)
         return random_links
+
+    def getAlltext(self):
+        # This function should be moved to WebPage class - DONE by maslakos
+        '''
+        input: address of existing website
+
+        output: list containing whole raw text found between tags chosen as "text_tags" argument
+        '''
+        html = requests.get(self.address)
+        print("Get text: ", self.address)
+        soup = BeautifulSoup(html.content, "html.parser")
+        text_list = []
+        text_tags = ('p')  # add html tags that contains text you want to download,
+        # type each tag as string, dont use comma signs
+        for tag in text_tags:
+            for text in soup.findAll(tag):
+                text_list.append(text.get_text())
+        return text_list
+
+#list = WebPage("http://blog.muscle-zone.pl/piwo-14-niesamowitych-zalet/")._get_page_content()
+#print(list)
