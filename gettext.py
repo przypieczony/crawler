@@ -2,13 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import sys
-from webpage import list
+
 
 
 class GetText():
 
     def __init__(self, text):
-        self.text = text
+        self.raw_text = text
 
     def splitToWord(self):
         '''
@@ -17,12 +17,12 @@ class GetText():
         output: splits each word from the text apart and returns as list
         '''
         words = []
-        for text in self.text:
+        for text in self.raw_text:
             for word in text.split(" "):
                 words.append(word)
         return words
 
-    def standarizeWords(self):
+    def standarizeWords(self, splitted_words):
         '''
         input: list [strings]
     
@@ -34,7 +34,7 @@ class GetText():
         new_word_list = []
         numbers = ["0","1","2","3","4","5","6","7","8","9"]
         p = re.compile("(\.|\!|\,|\?|\:|\;|\)|\(|\\|\/|\'|\")")
-        for word in self.text:
+        for word in splitted_words:
             is_word = True
             word = p.sub(" ", word)
             word = word.lower()
@@ -84,15 +84,15 @@ class GetText():
 
 
 
-    # def collect_words():
-    #     '''
-    #     input: address of existing website
-    #
-    #     returns tuple (domain name, dictionary { words on site : number of appearences })
-    #     '''
-    #     words = standarizeWords(splitToWord(getAlltext(address)))
-    #
-    #     return words
+    def collect_words(self):
+        '''
+        input: address of existing website
+    
+        returns tuple (domain name, dictionary { words on site : number of appearences })
+        '''
+        words = self.standarizeWords(self.splitToWord())
+    
+        return words
 
 #siema = GetText(list).top5words()
 #print(siema)

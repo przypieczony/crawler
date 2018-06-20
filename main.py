@@ -14,14 +14,17 @@
 # DONE
 
 # Function which gets url link as a arg and reurns data page.
+# Exclude .pdf/.jpg/.sth from fetch function
 # This function must be well protected since it will be used many times.
+
+# Improve validation of pages with too few links. For example use every link found
+# on page even if required amount of links is not reached. Additionally if no links
+# has found on page take another page to analyze from previous pool of pages
 
 # Class which will find all links on page, returns only not yet visited
 # and differentiate external links from internal ones. It should use regexp 
 # from first paragrpah
 # DONE
-
-# Function which collects as much as it can text from page. It may return list.
 
 # Function which gets words as an input and returns dictionary of dictionaries:
 # for example {page_addr: {word1: count1, word2: count2 ... }}
@@ -32,6 +35,10 @@
 # 		 int 5
 # Return: dict of tuple {page_addr: (word1, word2, workd3)}
 # 
+
+# Fix finding real words in standarizeWords and splitWord functions
+
+# Add blacklist or whitelist of words to validate the word
 
 # Function which saves dicts to file and format it as json (https://pl.wikipedia.org/wiki/JSON)
 
