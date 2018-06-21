@@ -17,6 +17,7 @@ class WebPage():
         self.page_content = self._get_page_content()
         self.links_on_site = []
         self.domain = self._domain_name(self.address)
+        self.all_text = []
 
     def _get_page_content(self):
         '''
@@ -84,3 +85,20 @@ class WebPage():
                     print("Adding link {}".format(link))
                     random_links.append(link)
         return random_links
+
+    def get_all_text(self):
+        '''
+        input: address of existing website
+
+        output: list containing whole raw text found between tags chosen as "text_tags" argument
+        '''
+        
+        text_tags = ('p')  # add html tags that contains text you want to download,
+        # type each tag as string, dont use comma signs
+        for tag in text_tags:
+            for text in self.page_content.findAll(tag):
+                self.all_text.append(text.get_text())
+        return self.all_text
+
+#list = WebPage("http://blog.muscle-zone.pl/piwo-14-niesamowitych-zalet/")._get_page_content()
+#print(list)
