@@ -1,12 +1,6 @@
-import requests
-from bs4 import BeautifulSoup
 import re
-import sys
-
-
 
 class GetText():
-
     def __init__(self, text):
         self.raw_text = text
 
@@ -55,8 +49,9 @@ class GetText():
     
         output: dictionary { word : count of appearances }
         '''
+        all_words = self.collect_words()
         words_count = {}
-        for word in self.text:
+        for word in all_words:
             if word in words_count:
                 words_count[word] += 1
             else:
@@ -91,8 +86,7 @@ class GetText():
         returns tuple (domain name, dictionary { words on site : number of appearences })
         '''
         words = self.standarizeWords(self.splitToWord())
-    
         return words
-
+        
 #siema = GetText(list).top5words()
 #print(siema)

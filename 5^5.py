@@ -1,18 +1,16 @@
 from webpage import WebPage
 from webpage import TooFewLinksOnPage
-from gettext import GetText
-import pprint
+import gettext
 
-
-address = 'https://pl.wikipedia.org/wiki/Piwo'
-#address = 'https://morefuzz.net/'
+#address = 'https://pl.wikipedia.org/wiki/Piwo'
+address = 'https://morefuzz.net/'
 
 
 global words_list
 words_list = {}
 
 
-def Crawl(address, recursions=2):
+def Crawl(address, recursions=1):
     '''
     gathers 5 random links from given website
     repeats recursively to each of the links that were found
@@ -30,7 +28,7 @@ def Crawl(address, recursions=2):
             if link not in words_list.keys():
                 all_text = web_page.get_all_text()
                 get_text_object = GetText(all_text)
-                words_list[link] = get_text_object.collect_words()
+                words_list[link] = get_text_object.countWords()
                 Crawl(link, recursions)
 
 
