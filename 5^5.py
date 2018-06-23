@@ -1,40 +1,43 @@
-from getAlltext import methode2
-from getLinks import get5random
-#from getLinks import get5random_ext
-from getAlltext import top5words
-from getAlltext import countWords
+from webpage import WebPage
+from webpage import TooFewLinksOnPage
+from gettext import GetText
+import pprint
+
 
 address = 'https://pl.wikipedia.org/wiki/Piwo'
 #address = 'https://morefuzz.net/'
 
-lista_linkow = []
 
-def Crawl(address, num=0):
+global words_list
+words_list = {}
+
+
+def Crawl(address, recursions=2):
     '''
     gathers 5 random links from given website
     repeats recursively to each of the links that were found
     '''
-    links_list = get5random(address)
-    global lista_linkow
-    num += 1
-    recursion = 2   #CHANGE Int for number of recursions
-    if num <= recursion:         
-        for link in links_list:
-            if link not in lista_linkow:
-                lista_linkow.append(link)
-            if num < recursion:
-                Crawl(link, num)
-    return len(lista_linkow)
+    try:
+        web_page = WebPage(address)
+        links = web_page.get_links(links_amount=5, only_external_links_allowed=True)
+    except TooFewLinksOnPage:
+        # skip this page
+        return
 
-def GatherWords(links_list):
-    LIST = []
-    for link in links_list:
-        LIST = LIST + methode2(link)
-    return LIST
+    if recursions > 0:
+        recursions -= 1   #CHANGE Int for number of recursions
+        for link in links:
+            if link not in words_list.keys():
+                all_text = web_page.get_all_text()
+                get_text_object = GetText(all_text)
+                words_list[link] = get_text_object.collect_words()
+                Crawl(link, recursions)
 
 
+# In Crawl function implement actual object creation
 Crawl(address)
-All_words_list = GatherWords(lista_linkow)
-All_words_dict = countWords(All_words_list)
-top_word = top5words(All_words_dict)
+#pp = pprint.PrettyPrinter(indent=4)
+#pp.pprint(words_list)
+print(len(words_list))
+print(words_list.keys())
 
