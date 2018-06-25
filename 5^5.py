@@ -29,8 +29,8 @@ def Crawl(address, recursions=2):
         for link in links:
             if link not in words_list.keys():
                 all_text = web_page.get_all_text()
-                get_text_object = GetText(all_text)
-                words_list[link] = get_text_object.collect_words()
+                words_parser = GetText(all_text)
+                words_list[link] = words_parser.top_words(5)
                 Crawl(link, recursions)
 
 
@@ -39,5 +39,5 @@ Crawl(address)
 #pp = pprint.PrettyPrinter(indent=4)
 #pp.pprint(words_list)
 print(len(words_list))
-print(words_list.keys())
+print(words_list)
 

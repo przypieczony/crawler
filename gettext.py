@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import sys
+from collections import Counter
 
 
 
@@ -9,6 +10,7 @@ class GetText():
 
     def __init__(self, text):
         self.raw_text = text
+        self.words = self.collect_words()
 
     def splitToWord(self):
         '''
@@ -47,40 +49,17 @@ class GetText():
             new_word_list.sort()
         return new_word_list
 
-    def countWords(self):
-        '''
-        input: list [strings]
-            
-        counts number of appearances of each word in the list
-    
-        output: dictionary { word : count of appearances }
-        '''
-        words_count = {}
-        for word in self.text:
-            if word in words_count:
-                words_count[word] += 1
-            else:
-                words_count[word] = 1
-        return words_count
 
-    def top5words(self):
+    def top_words(self, n):
         '''
-        input: dictionary genereted by "countWords" function
+        input: iterable
     
-        output: list of 5 keys(words) with biggest value
+        output: Tuple of lists with top n words
     
-        NOT FULLY FUNCTIONAL
+        [('word1', 35), ('word2', 25)]
         '''
-        words = self.countWords()
-        top_num = 0
-        top_word = ""
-        keys = words.keys()
-        for key in keys:
-            if len(key) > 3 and key != 'the':  # banned words
-                if words[key] > top_num:
-                    top_num = words[key]
-                    top_word = key
-        return top_word
+
+        return Counter(self.words).most_common(n)
 
 
 
@@ -90,9 +69,7 @@ class GetText():
     
         returns tuple (domain name, dictionary { words on site : number of appearences })
         '''
-        words = self.standarizeWords(self.splitToWord())
-    
-        return words
+        return self.standarizeWords(self.splitToWord())
 
 #siema = GetText(list).top5words()
 #print(siema)
