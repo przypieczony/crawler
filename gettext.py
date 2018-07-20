@@ -70,6 +70,3 @@ class GetText():
         returns tuple (domain name, dictionary { words on site : number of appearences })
         '''
         return self.standarizeWords(self.splitToWord())
-
-#siema = GetText(list).top5words()
-#print(siema)
