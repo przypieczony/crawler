@@ -39,7 +39,7 @@ class WebPage():
         Function which gets url link as a arg and reurns raw data page.
         This function must be well protected since it will be used many times.
         '''
-        banned_extensions = (".pdf", ".jpg", ".png")
+        banned_extensions = (".pdf", ".jpg", ".png", ".txt")
         if any(extension in self.address for extension in banned_extensions):
             raise BannedExtensionPage(self.address)
         else:

@@ -1,15 +1,46 @@
 from webpage import WebPage
 from webpage import TooFewLinksOnPage, BannedExtensionPage
-from gettext import GetText
+from getwords import GetWords
 from requests.exceptions import ConnectionError
+from flask import Flask, render_template, flash, request
+from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField
 import pprint
 
+app = Flask(__name__)
 
-address = 'https://pl.wikipedia.org/wiki/Piwo'
-#address = 'https://morefuzz.net/'
+app.config.from_object(__name__)
+app.config.update(SECRET_KEY=b'_5#y2L"F4Q8z\n\xec]/')
+
+import os
+print(os.getcwd())
+ 
+class ReusableForm(Form):
+    address = TextField('Name:', validators=[validators.required()])
+
+    def reset(self):
+        blankData = MultiDict([ ('csrf', self.reset_csrf() ) ])
+        self.process(blankData)
+
 
 global words_list
 words_list = {}
+
+@app.route("/", methods=['GET', 'POST'])
+def main():
+    form = ReusableForm(request.form)
+    
+    print(form.errors)
+    if request.method == 'POST':
+        address=request.form['address']
+ 
+        if form.validate():
+            Crawl(address)
+            flash("Number of visited pages: {}".format(len(words_list)))
+            flash(words_list)
+        else:
+            flash('Error: All the form fields are required. ')
+ 
+    return render_template('index.html', form=form)
 
 def Crawl(address, recursions=2, txt=""):
     '''
@@ -31,7 +62,7 @@ def Crawl(address, recursions=2, txt=""):
                 try:
                     Crawl(link, recursions, txt)
                     all_text = web_page.get_all_text()
-                    words_parser = GetText(all_text)
+                    words_parser = GetWords(all_text)
                     words_list[link] = words_parser.top_words(5)
                     links_amount += 1
                 except (TooFewLinksOnPage, BannedExtensionPage, ConnectionError):
@@ -39,9 +70,11 @@ def Crawl(address, recursions=2, txt=""):
                     continue
 
 
-Crawl(address)
+#Crawl(address)
 
 print("Number of visited pages: {}".format(len(words_list)))
 pp = pprint.PrettyPrinter(indent=4)
 pp.pprint(words_list)
 
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', debug=True, port=8000)

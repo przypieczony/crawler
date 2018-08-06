@@ -28,13 +28,14 @@
 
 # Function which gets words as an input and returns dictionary of dictionaries:
 # for example {page_addr: {word1: count1, word2: count2 ... }}
+DONE
 
 # Function which returns only words with most occurances and amount of 
 # reurned words.
 # Input: dict {page_addr: {word1: count1, word2: count2 ... }}
 # 		 int 5
 # Return: dict of tuple {page_addr: (word1, word2, workd3)}
-# 
+# DONE
 
 # Fix finding real words in standarizeWords and splitWord functions
 
